@@ -22,7 +22,6 @@ int main()
 
 //    CStest::runTests(CStest::Assertion::verbosity::VERBOSE);
 
-    CSapp::Worker worker;
 
     // TODO: Setup and handle watchdog
 

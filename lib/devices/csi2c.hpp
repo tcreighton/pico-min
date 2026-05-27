@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CSI2C_V2_HPP_
-#define CSI2C_V2_HPP_
 
 #include <cstdint>
 #include <type_traits>
@@ -210,5 +208,3 @@ namespace CSdevices {
     };
 
 }
-
-#endif

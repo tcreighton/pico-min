@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include "hardware/adc.h"
-#include "component.hpp"
 
 
 namespace CSdevices {
@@ -20,18 +19,15 @@ namespace CSdevices {
         PICO_AINSEL_9   = 0x09      // 2350B QFN-80 N/A    (temperature sensor)
     };
 
-    class PicoAdc : public Component {
+    class PicoAdc  {
 
     public:
-        PicoAdc (const std::string& label,
-                 const PicoAin ainSelect) : ain_(ainSelect) {
+        explicit PicoAdc (const PicoAin ainSelect) : ain_(ainSelect) {
 
-            setClassName("PicoAdc");
-            setLabel(label);
 
         }
 
-        ~PicoAdc () override = default;
+        ~PicoAdc () = default;
 
         /**
          * @brief Begins a conversion process using the AIN in ain_.

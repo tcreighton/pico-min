@@ -4,6 +4,8 @@
 #include "hardware/regs/adc.h" // For direct register access if needed
 #include "pico-adc.hpp"
 
+#include <type_traits>
+
 
 namespace CSdevices {
 

@@ -7,9 +7,9 @@
 #include "startup.hpp"
 
 #include "communication.hpp"
-#include "drivers-container.hpp"
-#include "product-info.hpp"
-#include "powersupply/powersupply-container.hpp"
+//#include "drivers-container.hpp"
+//#include "product-info.hpp"
+//#include "powersupply/powersupply-container.hpp"
 
 using namespace CScmdctl;
 using namespace CSdevices;
