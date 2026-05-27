@@ -67,3 +67,12 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# custom stuff
+.idea/*
+!.idea/runConfigurations
+!.idea/cmake.xml
+.vscode/*
+build/
+debug-build/
+.run/
