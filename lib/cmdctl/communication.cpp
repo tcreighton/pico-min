@@ -3,9 +3,8 @@
 #include <class/cdc/cdc_device.h>
 #include <device/usbd.h>
 
-#include "commands.hpp"
 #include "communication.hpp"
-#include "serial-comm.hpp"
+//#include "serial-comm.hpp"
 #include "shutdown.hpp"
 #include "pystring.h"
 
@@ -15,6 +14,17 @@ namespace CScmdctl {
     // Static member definitions
 //    DisplayMode Communication::displayMode_ = DisplayMode::GAMMA_DISPLAY;
     bool Communication::bpState_ = false;
+
+    bool Communication::getNextCommand(std::string &command) {
+        const auto retVal = !commandStrings_.empty();
+
+        if (retVal) { // commandStrings_ is not empty.
+            command = pystring::strip(pystring::lower(commandStrings_.front())); // trim and lower
+            commandStrings_.pop();
+        }
+
+        return retVal;
+    }
 
     /**
      * Extract potential commands from the buffer.
@@ -114,28 +124,19 @@ namespace CScmdctl {
         }
     }
 
-    void Communication::serialOutputLine(const std::string& output) {
-        std::stringstream ss;
-        ss << output << sCR << sLF;
-        serialOutput(ss.str());
-    }
+    void Communication::prepStringForOutput(std::stringstream& ss, const std::string& message) {
 
+        ss << sSTX;
 
-    void Communication::serialOutputLF160(const std::string &msg) {
-        std::stringstream ss;
-        // First make sure that all LF turn into CRLF. Shouldn't hurt Linux, but a must for MS and for ftdi
-        for (auto& ch : msg) {
+        // Make sure that all LF turn into CRLF. Shouldn't hurt Linux, but a must for MS and for ftdi
+        for (auto& ch : message) {
             if ('\n' == ch) {
                 ss << '\r';
             }
             ss << ch;   // This could give CRCRLF. Should not hurt.
         }
-        std::string const msg2 = ss.str();
-        ss = std::stringstream();
 
-        ss << sSTX << msg2 << sETX << MESSAGE_TERMINATOR;
-        std::string const s = ss.str();
-        serialOutput(s);
+        ss << sETX << MESSAGE_TERMINATOR;
     }
 
     void Communication::breakPoint(const std::string& msg) {
@@ -190,12 +191,16 @@ namespace CScmdctl {
         return retVal;
     }
 
-
     void Communication::recordCommands(const std::string &commandString) {
+        // This allows multiple commands on a line.
         std::vector<std::string> tokens;
         pystring::split(commandString, tokens, sSEMI);
         for (const auto& token : tokens) {
-            Command::recordCommandString(token);
+//            Command::recordCommandString(token);  // This is for a full CLI implementation!
+            commandStrings_.push(commandString);    // This one is for a simple command handler.
         }
     }
+
+    std::queue<std::string> Communication::commandStrings_;    // definition of the private queue.
+
 }

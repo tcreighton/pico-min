@@ -3,6 +3,11 @@
 add_library(core
         logger.hpp
         logger.cpp
+        packed-datetime.cpp
+        packed-datetime.hpp
+        product-info.hpp
+        pystring.cpp
+        pystring.h
         random.hpp
         utilities.hpp
         utilities.cpp

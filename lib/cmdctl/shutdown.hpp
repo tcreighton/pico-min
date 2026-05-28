@@ -1,9 +1,6 @@
 #pragma once
 
-#include <sstream>
-
-#include "drivers-container.hpp"
-#include "reports.hpp"
+#include "communication.hpp"
 
 // pico sdk
 #include "hardware/watchdog.h"
@@ -26,25 +23,21 @@ namespace CScmdctl {
 
         // Now send the reports.
 
-        Communication::serialOutputLF160("**Critical error encountered. System shutting down.**\n");
-        const std::string s = Report::fullSystemReport();
-        Communication::serialOutputLF160(s);
+        Communication::prepAndSendOutput("**Critical error encountered. System shutting down.**\n");
+//        const std::string s = Report::fullSystemReport();
+//        Communication::serialOutputLF160(s);
 
-        std::stringstream ss;
-        ss << "Shutting down...";
-        Communication::serialOutputLF160(ss.str());
+        Communication::prepAndSendOutput("Shutting down...");
         runMode_ = RunMode::SHUTDOWN;
     }
 
     inline void doRestart () {
         runMode_ = RunMode::REBOOT;
-        CSdrivers::getFilament().setCounts(0);
-        CSdrivers::getTube().setCounts(0);
         watchdog_reboot(0, 0, 0);
     }
 
     inline void awaitResetCommand() {
-        Communication::serialOutputLF160("\nPress ENTER to restart.");
+        Communication::prepAndSendOutput("\nPress ENTER to restart.");
         // ReSharper disable once CppDFALoopConditionNotUpdated
         while (runMode_ == RunMode::SHUTDOWN) {
 

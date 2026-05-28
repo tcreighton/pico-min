@@ -7,12 +7,10 @@
 #include "startup.hpp"
 
 #include "communication.hpp"
-//#include "drivers-container.hpp"
-//#include "product-info.hpp"
-//#include "powersupply/powersupply-container.hpp"
+#include "product-info.hpp"
 
 using namespace CScmdctl;
-using namespace CSdevices;
+using namespace CScore;
 
 void startup() {
 
@@ -30,7 +28,7 @@ void startup() {
 
     std::stringstream ss;
     ss << "\r\n\n****************************************************************\n";
-    Communication::serialOutputLine(ss.str());
+    Communication::prepAndSendOutput(ss.str());
     ss = std::stringstream();
 
     if (SerialComm::isUsbEnabled()) {
@@ -39,36 +37,31 @@ void startup() {
     if (SerialComm::isUartEnabled()) {
         ss << "UART enabled @ "+ std::to_string(uartActualBaudRate) + " baud. ";
     }
-    Communication::serialOutputLine(ss.str());
+    Communication::prepAndSendOutput(ss.str());
 
     ss = std::stringstream();
-    ss << "Lumafield 160Kv initializing. USB connect time about " << connectTime << " milliseconds.";
-    Communication::serialOutputLine(ss.str());
+    ss << "Pico Min initializing. USB connect time about " << connectTime << " milliseconds.";
+    Communication::prepAndSendOutput(ss.str());
     ss = std::stringstream();
-    ss << "Lumafield 160Kv Power Supply ID: " << getPicoBoardId();
-    Communication::serialOutputLine(ss.str());
+    ss << "Pico Min ID: " << getPicoBoardId();
+    Communication::prepAndSendOutput(ss.str());
     ss = std::stringstream();
     auto [seconds, minutes, hours, day, month, year]
                         = PackedDateTime::getUnpackedDateTime(PackedDateTime::getPackedBuildDateTime());
     ss << "Build: " << getFirmwareVersion();
-    Communication::serialOutputLine(ss.str());
+    Communication::prepAndSendOutput(ss.str());
 
     ss = std::stringstream();
 
     ss << "Current board name: " << CURRENT_BOARD_NAME;
     auto s = ss.str();
-    Communication::serialOutputLine(s);
+    Communication::prepAndSendOutput(s);
 
     ss = std::stringstream();
     ss << "\r\n\n****************************************************************\n";
     s = ss.str();
-    Communication::serialOutputLine(s);
+    Communication::prepAndSendOutput(s);
 #endif
 
-    auto& ps1 = CSdrivers::getPowerSupply(PowerSupplyId_t::FILAMENT);
-    auto& ps2 = CSdrivers::getPowerSupply(PowerSupplyId_t::TUBE);
-
-    ps1.deviceInit();
-    ps2.deviceInit();
 
 }

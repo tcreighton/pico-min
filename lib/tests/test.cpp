@@ -2,13 +2,6 @@
 // #include the hpp file for tests.
 #include "test.hpp"
 
-#include "test-9808.hpp"
-#include "test-dac-calibration.hpp"
-#include "test-eeprom.hpp"
-#include "test-fram-8k.hpp"
-#include "test-fram0.hpp"
-#include "test-load-store.hpp"
-
 
 namespace CStest {
 

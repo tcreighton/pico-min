@@ -75,18 +75,7 @@ namespace CScmdctl {
         Communication(const Communication& other) = delete;
         Communication& operator=(const Communication& other) = delete;
 
-        /*
-        static DisplayMode getDisplayMode() {
-            return displayMode_;
-        }
-        */
-
-        /*
-        static void setDisplayMode(const DisplayMode mode) {
-            displayMode_ = mode;
-        }
-        */
-
+        static bool getNextCommand (std::string& command);
         static bool hasCommandInterface() {
             return SerialComm::getActiveCommInterface() != CommInterface::NONE;
         }
@@ -94,54 +83,39 @@ namespace CScmdctl {
         static void handleInputBuffer();
 
         // Output functions - automatically route to the active interface
-        static void serialOutput(const std::string &output);
-        static void serialOutputLine(const std::string& output);
-        static void serialOutputLF160(const std::string& msg);
-        /*
-        static void serialOutputGamma(const std::string& msg);
-        static void displayStandardGammaError();
-        static void displayStandardGammaPositiveResponse();
-        */
+        // This assumes the output has been prepped with STX/ETX/CRLF.
+        static void serialOutput(const std::string& output);
+
+        static void prepAndSendOutput(const std::string& output) {
+            std::stringstream ss;
+            prepStringForOutput(ss, output);
+            serialOutput(ss.str());
+        }
+
+        /**
+         *
+         * @param ss This stream gets the adornments plus the message.
+         * @param message This is just a string to output. We need to encapsulate in STX/ETX and terminate with CRLF.
+         * @return A pointer to a new string with STX/ETX and CRLF.
+         */
+        static void prepStringForOutput(std::stringstream& ss, const std::string& message);
 
         static void bpOff() {bpState_ = false;}
         static void bpOn() {bpState_ = true;}
         static void breakPoint (const std::string &msg);
         static bool processDebugInputCharacter(char ch, std::string &inputBuffer);
 
-        constexpr static uint32_t  KEY_PRESS_TIMEOUT_MS = 1000 * 2;  // This is the default timeout for key press in milliseconds.
-        constexpr static bool      KEY_PRESS_TIMEOUT_ENABLED = false;// Command timeout is disabled for non-production.
-        static void kpOff() {kpState_ = false;}
-        static void kpOn() {
-            kpState_ = true;
-            resetKpTime();
-        }
-        static bool kpTimeExpired() {
-            if (!kpState_) {
-                return false;
-            }
-            const auto retVal = time_reached(kpTime_);
-            if (retVal) {
-                resetKpTime();
-            }
-            return retVal; // If this returns true, the caller needs to handle the situation!
-        }
-
-        static void setKpTimeOut(const uint32_t timeout = KEY_PRESS_TIMEOUT_MS) {kpTimeOut_ = timeout;}
-        static uint32_t getKpTimeOut() {return kpTimeOut_;}
-        static void resetKpTime() {
-            if (!kpState_) {return;} // If key press is not active, no need to reset timeout.
-            kpTime_ = delayed_by_ms(CScore::getNow(), kpTimeOut_);
-        }
     private:
-        static void recordCommands(const std::string& commandString);
+        // recordCommand is only done here for simple apps.
+        // When you implement a full CLI, this should delegate to
+        static void recordCommands (const std::string& command);
         static bool processInputCharacter(char ch, std::string &inputBuffer);
 
         // State tracking
 
         static bool bpState_;   // break point state; This supports a 'user mode' debug. Not used with a real debugger.
-        static bool kpState_;   // Key press state
-        static absolute_time_t kpTime_; // This is the next timeout time.
-        static uint32_t kpTimeOut_;     // This is the timeout interval in milliseconds.
+        static std::queue<std::string> commandStrings_; // This is used for "poor-man's" command handling.
+
     };
 
 }

@@ -2,11 +2,13 @@
 
 add_library(cmdctl
         board-config.cpp
-        board-config.cpp
+        board-config.hpp
+        communication.cpp
+        communication.hpp
         gpio.cpp
         gpio.hpp
-        serial-comm.hpp
         serial-comm.cpp
+        serial-comm.hpp
         shutdown.hpp
 )
 

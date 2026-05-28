@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "logger.hpp"
-#include "../cmdctl/pystring.h"
+#include "pystring.h"
 
 namespace CScore {
 
