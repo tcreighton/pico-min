@@ -6,6 +6,10 @@ add_library(cmdctl
         command.cpp
         command.hpp
         command-declarations.hpp
+        command-handler.cpp
+        command-handler.hpp
+        command-parser.cpp
+        command-parser.hpp
         communication.cpp
         communication.hpp
         gpio.cpp
