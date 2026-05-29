@@ -4,6 +4,7 @@
 #include "logger.hpp"
 #include "shutdown.hpp"
 #include "startup.hpp"
+#include "utilities.hpp"
 #include "pico/time.h"
 
 using namespace CScmdctl;
@@ -33,7 +34,7 @@ int main()
 
         std::stringstream ss;
 
-        ss << "Main Loop: " << CScore::uptime_ms() << " ms";
+        ss << "Main Loop: " << uptime_ms() << " ms";
         logger_.log(LogLevel::Trace, ss.str());
 
     }

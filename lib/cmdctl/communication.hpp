@@ -4,8 +4,6 @@
 #include <bits/stdc++.h>
 
 #include "serial-comm.hpp"
-#include "utilities.hpp"
-#include "hardware/timer.h"
 
 namespace CScmdctl {
 
@@ -75,7 +73,6 @@ namespace CScmdctl {
         Communication(const Communication& other) = delete;
         Communication& operator=(const Communication& other) = delete;
 
-        static bool getNextCommand (std::string& command);
         static bool hasCommandInterface() {
             return SerialComm::getActiveCommInterface() != CommInterface::NONE;
         }
@@ -106,15 +103,12 @@ namespace CScmdctl {
         static bool processDebugInputCharacter(char ch, std::string &inputBuffer);
 
     private:
-        // recordCommand is only done here for simple apps.
-        // When you implement a full CLI, this should delegate to
-        static void recordCommands (const std::string& command);
+
         static bool processInputCharacter(char ch, std::string &inputBuffer);
 
         // State tracking
 
         static bool bpState_;   // break point state; This supports a 'user mode' debug. Not used with a real debugger.
-        static std::queue<std::string> commandStrings_; // This is used for "poor-man's" command handling.
 
     };
 

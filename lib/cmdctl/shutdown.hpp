@@ -4,6 +4,7 @@
 
 // pico sdk
 #include "hardware/watchdog.h"
+#include "pico/time.h"
 
 namespace CScmdctl {
 
@@ -40,10 +41,8 @@ namespace CScmdctl {
         Communication::prepAndSendOutput("\nPress ENTER to restart.");
         // ReSharper disable once CppDFALoopConditionNotUpdated
         while (runMode_ == RunMode::SHUTDOWN) {
-
             sleep_ms(1000);
             Communication::handleInputBuffer();   // This will eventually call doRestart.
-
         }
     }
 }

@@ -3,6 +3,9 @@
 add_library(cmdctl
         board-config.cpp
         board-config.hpp
+        command.cpp
+        command.hpp
+        command-declarations.hpp
         communication.cpp
         communication.hpp
         gpio.cpp

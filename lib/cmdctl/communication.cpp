@@ -4,9 +4,9 @@
 #include <device/usbd.h>
 
 #include "communication.hpp"
-//#include "serial-comm.hpp"
+#include "command.hpp"
+#include "serial-comm.hpp"
 #include "shutdown.hpp"
-#include "pystring.h"
 
 
 namespace CScmdctl {
@@ -14,17 +14,6 @@ namespace CScmdctl {
     // Static member definitions
 //    DisplayMode Communication::displayMode_ = DisplayMode::GAMMA_DISPLAY;
     bool Communication::bpState_ = false;
-
-    bool Communication::getNextCommand(std::string &command) {
-        const auto retVal = !commandStrings_.empty();
-
-        if (retVal) { // commandStrings_ is not empty.
-            command = pystring::strip(pystring::lower(commandStrings_.front())); // trim and lower
-            commandStrings_.pop();
-        }
-
-        return retVal;
-    }
 
     /**
      * Extract potential commands from the buffer.
@@ -49,7 +38,7 @@ namespace CScmdctl {
                             doRestart();
                         }
                         commandString = inputBuffer;
-                        recordCommands(commandString);
+                        Command::recordCommandString(commandString);
                         inputBuffer.clear();
                         return; // Process one command at a time.
                     }
@@ -64,7 +53,7 @@ namespace CScmdctl {
                         // If we return true, we have a termination character.
                         // We need to process the command string.
                         commandString = inputBuffer;
-                        recordCommands(commandString);
+                        Command::recordCommandString(commandString);
                         inputBuffer.clear();
                         return; // Process one command at a time.
                     }
@@ -191,16 +180,5 @@ namespace CScmdctl {
         return retVal;
     }
 
-    void Communication::recordCommands(const std::string &commandString) {
-        // This allows multiple commands on a line.
-        std::vector<std::string> tokens;
-        pystring::split(commandString, tokens, sSEMI);
-        for (const auto& token : tokens) {
-//            Command::recordCommandString(token);  // This is for a full CLI implementation!
-            commandStrings_.push(commandString);    // This one is for a simple command handler.
-        }
-    }
-
-    std::queue<std::string> Communication::commandStrings_;    // definition of the private queue.
 
 }
