@@ -41,6 +41,11 @@ namespace CScmdctl {
         UNCLASSIFIED,
     };
 
+    enum class ReportType_t : uint8_t {
+        INFO,
+    };
+
+
     struct TokenValue {
         LanguageTokenId tokenId{LanguageTokenId::UNKNOWN};
         TokenType       tokenType{TokenType::UNCLASSIFIED};      // unknown is not necessarily an error. Determined in context.

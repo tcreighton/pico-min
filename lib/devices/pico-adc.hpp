@@ -27,7 +27,7 @@ namespace CSdevices {
 
         }
 
-        ~PicoAdc () = default;
+        virtual ~PicoAdc () = default;
 
         /**
          * @brief Begins a conversion process using the AIN in ain_.

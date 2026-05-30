@@ -3,8 +3,12 @@
 
 add_library(devices
         csi2c.hpp
+        devices-container.hpp
+        mcu-temp-sensor.cpp
+        mcu-temp-sensor.hpp
         pico-adc.hpp
         pico-adc.cpp
+        temp-sensor.hpp
 )
 
 target_include_directories(devices PUBLIC

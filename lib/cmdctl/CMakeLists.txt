@@ -21,6 +21,8 @@ add_library(cmdctl
         gpio.hpp
         json-report.cpp
         json-report.hpp
+        reports.cpp
+        reports.hpp
         serial-comm.cpp
         serial-comm.hpp
         shutdown.hpp
