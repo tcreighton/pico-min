@@ -2,19 +2,18 @@
 
 #include <queue>
 
-#include "command-declarations.hpp"
 #include "communication.hpp"
 #include "pystring.h"
 
 
 namespace CScmdctl {
 
-    class Command final{
+    class Command final {
     public:
 
         Command() = default;
 
-        bool doCommand ();
+        static bool doCommand ();
 
         static void recordCommandString (const std::string& commandString) {
             // This allows multiple commands on a line.

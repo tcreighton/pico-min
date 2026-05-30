@@ -18,15 +18,15 @@ namespace CScmdctl {
 // Board definition set in CMake.
 #define SHOW_INFO_AT_STARTUP    // Shows startup info.
 
-#if defined(BOARD_LF160_REV_A)
+#if defined(BOARD_PICO_MIN_REV_A)
     constexpr auto CURRENT_BOARD = BoardRevision::REV_A;
-    constexpr auto CURRENT_BOARD_NAME = "LF160 Rev A";
-#elif defined(BOARD_LF160_REV_B)
+    constexpr auto CURRENT_BOARD_NAME = "LFPico Min160 Rev A";
+#elif defined(BOARD_PICO_MIN_REV_B)
     constexpr auto CURRENT_BOARD = BoardRevision::REV_B;
-    constexpr auto CURRENT_BOARD_NAME = "LF160 Rev B";
+    constexpr auto CURRENT_BOARD_NAME = "Pico Min Rev B";
 #else
-    constexpr auto CURRENT_BOARD = BoardRevision::REV_A;
-    constexpr auto CURRENT_BOARD_NAME = "LF160 Rev A";
+    constexpr auto CURRENT_BOARD = BoardRevision::REV_0;
+    constexpr auto CURRENT_BOARD_NAME = "Pico Min Rev 0";
 #endif
 
     constexpr auto getBoardRevision() {return CURRENT_BOARD;}

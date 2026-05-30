@@ -17,9 +17,7 @@ int main()
 
 //    CStest::runTests(CStest::Assertion::verbosity::VERBOSE);
 
-
     // TODO: Setup and handle watchdog
-
 
     ///
     /// Main Loop!

@@ -1,6 +1,9 @@
 
 #include "command.hpp"
 
+#include "command-handler.hpp"
+#include "command-parser.hpp"
+
 namespace CScmdctl {
 
 
@@ -11,8 +14,23 @@ namespace CScmdctl {
     // 4) If the parser succeeds, call the handler.
     //
     bool Command::doCommand() {
-        auto retVal = false;
-        CommandStructure commandStructure{};
+        auto retVal = true; // If there is no command string ready, we return true.
+
+        if (!commandStrings_.empty()) {
+            CommandStructure commandStruct{};
+            std::string commandString = commandStrings_.front();
+            commandStrings_.pop();
+            if (!commandString.empty()) {
+                commandStruct.commandString = commandString;
+                CommandParser commandParser(commandStruct);
+                retVal = commandParser.parseCommand();
+            }
+
+            if (retVal) { // If it parsed ok, let's run it!
+                CommandHandler commandHandler(commandStruct);
+                retVal = commandHandler.handleCommand();
+            }
+        }
 
         return retVal;
     }

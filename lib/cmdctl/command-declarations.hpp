@@ -8,14 +8,36 @@
 namespace CScmdctl {
 
     enum class CommandWord : std::uint8_t {
+        SALUDA,
+        SAY_HELLO,
         UNKNOWN,
     };
 
     enum class LanguageTokenId {
+        AMPS,
+        COUNTS,
+        KILOVOLTS,
+        MILLIVOLTS,
+        MICROAMPS,
+        MILLIAMPS,
+        VOLTS,
+        DECODE,
+        CELSIUS,
+        KELVIN,
+        FAHRENHEIT,
+        NUMBER,
+        RPT_INFO,
+        SALUDA,
+        SAY_HELLO,
         UNKNOWN,
     };
 
     enum class TokenType : uint8_t {
+        COMMAND_WORD,
+        NUMBER,
+        PARAMETER,      // Generic designation.
+        TEMP_UNITS,     // temperature units: celsius, kelvin, fahrenheit
+        UNITS,
         UNCLASSIFIED,
     };
 

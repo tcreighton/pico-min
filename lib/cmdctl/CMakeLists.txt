@@ -8,10 +8,15 @@ add_library(cmdctl
         command-declarations.hpp
         command-handler.cpp
         command-handler.hpp
+        command-lang.cpp
+        command-lang.hpp
         command-parser.cpp
         command-parser.hpp
         communication.cpp
         communication.hpp
+        error-context.hpp
+        errors.cpp
+        errors.hpp
         gpio.cpp
         gpio.hpp
         serial-comm.cpp
