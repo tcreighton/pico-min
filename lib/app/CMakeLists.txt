@@ -1,9 +1,9 @@
 
 add_library(app
-#        state-machine.cpp
-#        state-machine.hpp
-#        worker.cpp
-#        worker.hpp
+        state-machine.cpp
+        state-machine.hpp
+        worker.cpp
+        worker.hpp
 )
 
 target_include_directories(app PUBLIC

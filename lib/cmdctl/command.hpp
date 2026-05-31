@@ -11,7 +11,7 @@ namespace CScmdctl {
     class Command final {
     public:
 
-        Command() = default;
+        Command() = delete;
 
         static bool doCommand ();
 

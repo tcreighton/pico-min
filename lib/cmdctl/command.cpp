@@ -18,16 +18,16 @@ namespace CScmdctl {
 
         if (!commandStrings_.empty()) {
             CommandStructure commandStruct{};
-            std::string commandString = commandStrings_.front();
+            const std::string commandString = commandStrings_.front();
             commandStrings_.pop();
             if (!commandString.empty()) {
                 commandStruct.commandString = commandString;
-                CommandParser commandParser(commandStruct);
+                const CommandParser commandParser(commandStruct);
                 retVal = commandParser.parseCommand();
             }
 
             if (retVal) { // If it parsed ok, let's run it!
-                CommandHandler commandHandler(commandStruct);
+                const CommandHandler commandHandler(commandStruct);
                 retVal = commandHandler.handleCommand();
             }
         }

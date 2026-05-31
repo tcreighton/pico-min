@@ -18,6 +18,10 @@ namespace CSdevices {
         MCUTempSensor(const MCUTempSensor&) = delete;
         MCUTempSensor& operator=(const MCUTempSensor&) = delete;
 
+        bool init() {
+            return true;
+        }
+
         void startConversion () override {
             PicoAdc::startConversion();
             setConversionStartTime(get_absolute_time());

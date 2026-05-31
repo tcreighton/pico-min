@@ -23,6 +23,7 @@ add_library(cmdctl
         json-report.hpp
         reports.cpp
         reports.hpp
+        response-handler.hpp
         serial-comm.cpp
         serial-comm.hpp
         shutdown.hpp
