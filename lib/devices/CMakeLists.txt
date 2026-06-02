@@ -4,6 +4,8 @@
 add_library(devices
         csi2c.hpp
         devices-container.hpp
+        led.cpp
+        led.hpp
         mcu-temp-sensor.cpp
         mcu-temp-sensor.hpp
         pico-adc.hpp
@@ -21,13 +23,13 @@ target_link_libraries(devices PUBLIC
         tests
 # pico interfaces here
         hardware_adc
-#        hardware_gpio
+        hardware_gpio
         hardware_i2c
 #       hardware_pwm
 #       hardware_spi
 #       hardware_timer
 #       hardware_uart
 #       pico_multicore
-#       pico_stdlib
+       pico_stdlib
 #       pico_sync
 )

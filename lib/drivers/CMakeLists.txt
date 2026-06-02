@@ -2,6 +2,9 @@
 # Create a library for drivers
 
 add_library(drivers
+        drivers-container.hpp
+        drivers-declarations.hpp
+        led-driver.hpp
 )
 
 target_include_directories(drivers PUBLIC

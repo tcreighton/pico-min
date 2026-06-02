@@ -15,12 +15,12 @@
 */
 namespace CScore {
 
-    enum class TempSensor_t : uint8_t {
+    enum class TempSensor_t : std::uint8_t {
         MCU_SENSOR = 0,     // MCU internal temperature sensor
     };
 
 
-    enum class Unit_t : uint8_t {
+    enum class Unit_t : std::uint8_t {
         AMPS = 0,
         COUNTS,
         KILOVOLTS,

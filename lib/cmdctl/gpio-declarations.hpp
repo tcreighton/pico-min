@@ -39,6 +39,7 @@ namespace CScmdctl {
     constexpr uint8_t GPIO_23 = 23;    // Physical P-xx, RP-35;
     constexpr uint8_t GPIO_24 = 24;    // Physical P-xx, RP-36;
     constexpr uint8_t GPIO_25 = 25;    // Physical P-xx, RP-37; LED default
+    constexpr uint8_t LED_PIN = GPIO_25;
     constexpr uint8_t GPIO_26 = 26;    // Physical P-31, RP-38; ADC0 default; I2C1 SDA
     constexpr uint8_t GPIO_27 = 27;    // Physical P-32, RP-39; ADC1 default; I2C1 SCL
                                        // Physical P-33 is Ground; AGND (analog ground)

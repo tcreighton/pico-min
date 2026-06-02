@@ -39,10 +39,8 @@ namespace CScmdctl {
         bool hasUART0;
         bool hasUART1;
         bool hasRS232;
-        bool hasInterlocks;
+        bool hasLed;
         bool hasSystemControl;
-        bool hasFilamentControl;
-        bool hasTubeControl;
     };
 
     /**
@@ -60,8 +58,8 @@ namespace CScmdctl {
      */
     enum class UartId : uint8_t {
         UART0 = 0,
-        UART1 = 1,
-        RS232 = 2,
+        UART1,
+        RS232,
     };
 
     /**
@@ -73,7 +71,7 @@ namespace CScmdctl {
         uint32_t baud_rate{115200};
         bool enabled{false};
         bool commandHandler{false};     // Is this UART used for user commands?
-        UartId uartId{UartId::UART0};       // Self-identifying. If you have a config, you can get the id.
+        UartId uartId{UartId::UART0};   // Self-identifying. If you have a config, you can get the id.
 
         /**
          * Validate that the UART configuration is safe to use
@@ -180,11 +178,6 @@ namespace CScmdctl {
      * Input pins configuration (interlocks, sensors, etc.)
      */
     struct InputPins {
-//        uint8_t door_interlock{};
-//        uint8_t hv_enabled_interlock{};
-//        uint8_t voltage_48v_enabled{};
-//        uint8_t pump_interlock{};
-//        uint8_t flow_interlock{};
         uint8_t system_shutdown{};
         uint8_t adc0{};             // AINSEL_0
         uint8_t adc1{};             // AINSEL_1
@@ -196,8 +189,7 @@ namespace CScmdctl {
      * Output pins configuration (control signals)
      */
     struct OutputPins {
-        uint8_t filament_shutdown{};
-        uint8_t tube_shutdown{};
+        uint8_t led{};
     };
 
     /**
@@ -220,14 +212,11 @@ namespace CScmdctl {
         constexpr BoardConfig REV_0_CONFIG = {
             .revision = BoardRevision::REV_0,
             .capabilities = {
-                .hasEEPROM          = true,
+                .hasEEPROM          = false,
                 .hasFram            = false,
-                .hasUART0           = true,
+                .hasUART0           = false,
                 .hasUART1           = false,
-                .hasInterlocks      = false,
-                .hasSystemControl   = true,
-                .hasFilamentControl = true,
-                .hasTubeControl     = true
+                .hasLed             = true
             },
             .i2c = {
                 .c0_sda = GPIO_04,
@@ -254,11 +243,6 @@ namespace CScmdctl {
                 }
             },
             .inputs = {
-//                .door_interlock         = GPIO_23,  // Dummy pin for Rev 0
-//                .hv_enabled_interlock   = GPIO_23,  // Dummy pin for Rev 0
-//                .voltage_48v_enabled    = GPIO_23,  // Dummy pin for Rev 0
-//                .pump_interlock         = GPIO_23,  // Dummy pin for Rev 0
-//                .flow_interlock         = GPIO_23,  // Dummy pin for Rev 0
                 .system_shutdown        = GPIO_20,
                 .adc0                   = GPIO_26,
                 .adc1                   = GPIO_27,
@@ -267,22 +251,18 @@ namespace CScmdctl {
             },
 
             .outputs = {
-                .filament_shutdown  = GPIO_15,
-                .tube_shutdown      = GPIO_16,
+                .led = GPIO_25,
             }
         };
 
         constexpr BoardConfig REV_A_CONFIG = {
             .revision = BoardRevision::REV_A,
             .capabilities = {
-                .hasEEPROM          = true,
-                .hasFram            = true,
-                .hasUART0           = true,
-                .hasUART1           = true,  // UART1 is rs232
-                .hasInterlocks      = false,
-                .hasSystemControl   = true,
-                .hasFilamentControl = true,
-                .hasTubeControl     = true,
+                .hasEEPROM          = false,
+                .hasFram            = false,
+                .hasUART0           = false,
+                .hasUART1           = false,  // UART1 is rs232
+                .hasLed             = true
             },
             .i2c = {
                 .c0_sda = GPIO_04,
@@ -316,22 +296,18 @@ namespace CScmdctl {
                 .adc3                   = GPIO_29
             },
             .outputs = {
-                .filament_shutdown  = GPIO_15,
-                .tube_shutdown      = GPIO_16,
+                .led = GPIO_25,
             }
         };
 
         constexpr BoardConfig REV_B_CONFIG = {
             .revision = BoardRevision::REV_B,
             .capabilities = {
-                .hasEEPROM          = true,
-                .hasFram            = true,
-                .hasUART0           = true,
+                .hasEEPROM          = false,
+                .hasFram            = false,
+                .hasUART0           = false,
                 .hasUART1           = false,
-                .hasInterlocks      = true,
-                .hasSystemControl   = true,
-                .hasFilamentControl = false,
-                .hasTubeControl     = true,
+                .hasLed             = true
             },
             .i2c = {
                 .c0_sda = GPIO_04,
@@ -358,11 +334,6 @@ namespace CScmdctl {
                 }
             },
             .inputs = {
-//                .door_interlock       = GPIO_23,
-//                .hv_enabled_interlock = GPIO_23,
-//                .voltage_48v_enabled  = GPIO_23,
-//                .pump_interlock       = GPIO_23,
-//                .flow_interlock       = GPIO_23
                 .system_shutdown        = GPIO_20,
                 .adc0                   = GPIO_26,
                 .adc1                   = GPIO_27,
@@ -370,8 +341,7 @@ namespace CScmdctl {
                 .adc3                   = GPIO_29
             },
             .outputs = {
-                .filament_shutdown  = GPIO_15,
-                .tube_shutdown      = GPIO_16,
+                .led = GPIO_25,
             }
         };
 
