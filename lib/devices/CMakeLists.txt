@@ -20,7 +20,6 @@ target_include_directories(devices PUBLIC
 # Link against Pico SDK libraries this module needs
 target_link_libraries(devices PUBLIC
         core
-        tests
 # pico interfaces here
         hardware_adc
         hardware_gpio

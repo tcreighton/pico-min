@@ -2,8 +2,10 @@
 # Create a library for drivers
 
 add_library(drivers
+        drivers-container.cpp
         drivers-container.hpp
         drivers-declarations.hpp
+        led-driver.cpp
         led-driver.hpp
 )
 

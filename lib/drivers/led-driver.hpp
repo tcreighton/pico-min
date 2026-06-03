@@ -10,8 +10,7 @@ namespace CSdrivers {
 
     public:
 
-        LedDriver(const LedId id, const uint8_t gpio) : id_(id), Led(gpio) {
-        };
+        LedDriver(const LedId id, const uint8_t gpio) : Led(gpio), id_(id) {};
 
     private:
         LedId id_;

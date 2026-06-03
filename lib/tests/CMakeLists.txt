@@ -5,6 +5,8 @@ add_library(tests
         assertion.hpp
         test.cpp
         test.hpp
+        test-onboard-led.cpp
+        test-onboard-led.hpp
 )
 
 target_include_directories(tests PUBLIC

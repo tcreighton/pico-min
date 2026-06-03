@@ -4,6 +4,7 @@
 #include "logger.hpp"
 #include "shutdown.hpp"
 #include "startup.hpp"
+#include "test.hpp"
 #include "utilities.hpp"
 #include "pico/time.h"
 
@@ -15,7 +16,7 @@ int main()
     startup();
     logger_.setLogLevel(LogLevel::Info);   // For prod set this to Fatal.
 
-//    CStest::runTests(CStest::Assertion::verbosity::VERBOSE);
+    CStest::runTests(CStest::Assertion::verbosity::VERBOSE);
 
     // TODO: Setup and handle watchdog
 

@@ -2,6 +2,8 @@
 
 # Set minimum required version of CMake
 cmake_minimum_required(VERSION 3.13...3.30.2)
+include(pico_sdk_import.cmake)
+
 #set(PICO_SDK_PATH "/home/tc/pico/pico-sdk")
 # Import PICO_SDK_PATH from environment if not already set as a CMake variable
 if(NOT DEFINED PICO_SDK_PATH)
@@ -18,11 +20,10 @@ message(STATUS "Using Pico SDK at: ${PICO_SDK_PATH}")
 #set(PROJECT_HOME ${CMAKE_SOURCE_DIR})
 #enable exceptions for the project
 set(PICO_CXX_ENABLE_EXCEPTIONS 1)
-#enable Real Time Type Information
-set(PICO_CXX_ENABLE_RTTI 0)
+#enable Run Time Type Information
+set(PICO_CXX_ENABLE_RTTI 1)
 #set(PICO_SDK_HOME ${P})
 message("Pico home: ${PICO_SDK_PATH}")
-include(pico_sdk_import.cmake)
 
 # Configure before sdk init!
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -34,13 +35,12 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
 	message("Building with asserts disabled.")
 endif()
 
-# Initialize the SDK BEFORE project() - this sets up the toolchain
-pico_sdk_init()
-
 project(pico-min C CXX ASM)	# CHANGE ME!
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+pico_sdk_init()
 
 message(STATUS "Starting configuration.")
 include(CMakePrintHelpers)
@@ -87,6 +87,3 @@ cmake_print_variables(CMAKE_CXX_FLAGS)
 
 cmake_print_variables($ENV{PICO_SDK_PATH})
 
-# Enable usb and uart output
-pico_enable_stdio_usb(${PROJECT_NAME} 1)
-pico_enable_stdio_uart(${PROJECT_NAME} 1)

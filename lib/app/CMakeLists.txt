@@ -15,7 +15,6 @@ target_link_libraries(app PUBLIC
         core
         devices
         drivers
-        tests
         # pico interfaces here
         #       hardware_adc
         #       hardware_gpio
