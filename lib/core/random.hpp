@@ -1,13 +1,10 @@
 
 #pragma once
 
-// This RandomGenerator class is based on a response by ChatGPT 4.0
-
 #include <random>
 #include <limits>
 
 namespace CSdevices {
-
 
     class RandomGenerator {
     public:

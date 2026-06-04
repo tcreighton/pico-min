@@ -15,6 +15,12 @@ namespace CSdevices {
             gpio_set_dir(gpioId, GPIO_OUT);
         }
 
+        [[nodiscard]] bool init () const {
+            gpio_init(gpioId_);
+            gpio_set_dir(gpioId_, GPIO_IN);
+            return true;
+        }
+
         void setEnabled (const bool enabled) {
             enabled_ = enabled;
             setOff();   // Any time the enabled state changes, we make sure the led is off.

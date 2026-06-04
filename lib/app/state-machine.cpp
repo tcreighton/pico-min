@@ -4,6 +4,7 @@
 #include "command.hpp"
 #include "communication.hpp"
 #include "devices-container.hpp"
+#include "drivers-container.hpp"
 
 using namespace CScore;
 
@@ -93,7 +94,10 @@ namespace CSapp {
 
     bool StateMachine::initialState() {
         auto retValue = CSdevices::getMCUTempSensor().init();
-
+// Other initializations would go here. As an example, we could init the led class.
+        if (retValue) {
+            retValue = CSdrivers::getOnBoardLed().init();   // fail fast.
+        }
         return retValue;
     }
 
@@ -125,6 +129,7 @@ namespace CSapp {
 //        CSdevices::logger_.log(CSdevices::LogLevel::Trace, "State Three");
 
         const auto retValue = CScmdctl::Command::doCommand();
+        CSdrivers::getOnBoardLed().checkBlinking();    // If it's not been enabled, or not started, this does nothing.
 
         return retValue;
     }
